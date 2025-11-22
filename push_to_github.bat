@@ -67,18 +67,27 @@ if /i not "%push_confirm%"=="Y" (
     exit /b 0
 )
 
-REM Pull latest changes first (in case of conflicts)
+REM Check if remote branch exists
 echo.
-echo Pulling latest changes from remote...
-git pull origin master --rebase
+echo Checking remote repository...
+git ls-remote --heads origin master >nul 2>&1
 
 if errorlevel 1 (
+    echo Remote branch 'master' does not exist yet.
+    echo This appears to be the first push to an empty repository.
     echo.
-    echo WARNING: Pull failed. There might be conflicts.
-    echo Please resolve conflicts manually and run this script again.
-    echo.
-    pause
-    exit /b 1
+) else (
+    echo Pulling latest changes from remote...
+    git pull origin master --rebase
+    
+    if errorlevel 1 (
+        echo.
+        echo WARNING: Pull failed. There might be conflicts.
+        echo Please resolve conflicts manually and run this script again.
+        echo.
+        pause
+        exit /b 1
+    )
 )
 
 REM Push to GitHub
