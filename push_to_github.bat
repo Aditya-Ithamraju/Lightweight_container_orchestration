@@ -70,7 +70,7 @@ if /i not "%push_confirm%"=="Y" (
 REM Pull latest changes first (in case of conflicts)
 echo.
 echo Pulling latest changes from remote...
-git pull origin main --rebase
+git pull origin master --rebase
 
 if errorlevel 1 (
     echo.
@@ -84,7 +84,7 @@ if errorlevel 1 (
 REM Push to GitHub
 echo.
 echo Pushing to GitHub...
-git push -u origin main
+git push -u origin master
 
 if errorlevel 1 (
     echo.
@@ -92,7 +92,7 @@ if errorlevel 1 (
     echo.
     echo Common reasons:
     echo 1. Authentication required - Set up Personal Access Token
-    echo 2. Remote has changes - Pull first with: git pull origin main
+    echo 2. Remote has changes - Pull first with: git pull origin master
     echo 3. Branch name mismatch - Check branch with: git branch
     echo.
     echo To set up authentication:
